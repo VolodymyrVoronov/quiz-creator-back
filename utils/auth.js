@@ -44,7 +44,9 @@ export const signup = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(NETWORK_STATUS.OK).json({ result: { avatar, email, token } });
+    res
+      .status(NETWORK_STATUS.OK)
+      .json({ result: { avatar, email, token, id: _id } });
   } catch (error) {
     res
       .status(NETWORK_STATUS.INTERNAL_SEVER_ERROR)
@@ -58,7 +60,6 @@ export const signin = async (req, res) => {
 
   try {
     const existingUser = await User.findOne({ email });
-
     if (!existingUser) {
       return res
         .status(NETWORK_STATUS.NOT_FOUND)
@@ -88,6 +89,7 @@ export const signin = async (req, res) => {
       avatar: existingUser.avatar,
       email: existingUser.email,
       token,
+      id: existingUser._id,
     };
 
     res.status(NETWORK_STATUS.OK).json({ result });
