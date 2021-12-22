@@ -39,16 +39,62 @@ export const signup = async (req, res) => {
     });
 
     const token = jwt.sign(
-      { login: result.login, id: result._id },
+      { email: result.email, id: result._id },
       process.env.SECRET_TOKEN,
-      { expiresIn: "30d" }
+      { expiresIn: "1h" }
     );
 
-    res.status(NETWORK_STATUS.OK).json({ result, token });
+    res.status(NETWORK_STATUS.OK).json({ result: { avatar, email, token } });
   } catch (error) {
     res
       .status(NETWORK_STATUS.INTERNAL_SEVER_ERROR)
       .json({ message: "Something went wrong." });
+    console.log(error);
+  }
+};
+
+export const signin = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) {
+      return res
+        .status(NETWORK_STATUS.NOT_FOUND)
+        .json({ message: `User doesn't exist.` });
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordCorrect) {
+      return res
+        .status(NETWORK_STATUS.BAD_REQUEST)
+        .json({ message: `Invalid credentials.` });
+    }
+
+    const token = jwt.sign(
+      { email: existingUser.email, id: existingUser._id },
+      process.env.SECRET_TOKEN,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    const result = {
+      avatar: existingUser.avatar,
+      email: existingUser.email,
+      token,
+    };
+
+    res.status(NETWORK_STATUS.OK).json({ result });
+  } catch (error) {
+    res
+      .status(NETWORK_STATUS.INTERNAL_SEVER_ERROR)
+      .json({ message: `Something went wrong.` });
     console.log(error);
   }
 };
