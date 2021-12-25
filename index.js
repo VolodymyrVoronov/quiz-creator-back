@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 import { signup, signin } from "./utils/auth.js";
 
-import quizRoutes from "./routes/quiz.js";
+import quizRouter from "./routes/quiz.js";
 
 const app = express();
 dotenv.config();
@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.post("/signup", signup);
 app.post("/signin", signin);
 
-app.use("/quiz", quizRoutes);
+app.use("/quiz", quizRouter);
 
 const PORT = process.env.PORT || 5000;
 

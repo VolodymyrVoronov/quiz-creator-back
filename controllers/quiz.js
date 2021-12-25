@@ -21,3 +21,17 @@ export const addNewQuiz = async (req, res) => {
     res.status(NETWORK_STATUS.CONFLICT).json({ message: error.message });
   }
 };
+
+export const fetchQuizzes = async (req, res) => {
+  try {
+    const quizzes = await Quiz.find();
+
+    res.status(NETWORK_STATUS.OK).json({ quizzes });
+  } catch (error) {
+    console.log(error);
+
+    res
+      .status(NETWORK_STATUS.INTERNAL_SEVER_ERROR)
+      .json({ message: error.message });
+  }
+};
