@@ -51,6 +51,7 @@ export const signup = async (req, res) => {
     res
       .status(NETWORK_STATUS.INTERNAL_SEVER_ERROR)
       .json({ message: "Something went wrong." });
+
     console.log(error);
   }
 };
@@ -63,7 +64,7 @@ export const signin = async (req, res) => {
     if (!existingUser) {
       return res
         .status(NETWORK_STATUS.NOT_FOUND)
-        .json({ message: `User doesn't exist.` });
+        .json({ message: "User doesn't exist." });
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -74,7 +75,7 @@ export const signin = async (req, res) => {
     if (!isPasswordCorrect) {
       return res
         .status(NETWORK_STATUS.BAD_REQUEST)
-        .json({ message: `Invalid credentials.` });
+        .json({ message: "Invalid credentials." });
     }
 
     const token = jwt.sign(
@@ -96,7 +97,8 @@ export const signin = async (req, res) => {
   } catch (error) {
     res
       .status(NETWORK_STATUS.INTERNAL_SEVER_ERROR)
-      .json({ message: `Something went wrong.` });
+      .json({ message: "Something went wrong." });
+
     console.log(error);
   }
 };
