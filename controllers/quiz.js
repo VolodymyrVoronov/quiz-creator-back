@@ -7,7 +7,7 @@ import { NETWORK_STATUS } from "../const/networkStatus.js";
 export const addNewQuiz = async (req, res) => {
   const quiz = req.body;
 
-  const newQuiz = new Quiz({ quiz });
+  const newQuiz = new Quiz({ ...quiz });
 
   try {
     await newQuiz.save();
