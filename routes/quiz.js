@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { addNewQuiz, fetchQuizzes } from "../controllers/quiz.js";
+import { addNewQuiz, fetchQuizzes, deleteQuiz } from "../controllers/quiz.js";
 
 import protect from "./../utils/protect.js";
 
@@ -10,6 +10,6 @@ const router = Router();
 router.route("/").get(fetchQuizzes).post(protect, addNewQuiz);
 
 // /quiz/:id
-// router.route("/:id").get().delete();
+router.route("/:id").delete(protect, deleteQuiz);
 
 export default router;

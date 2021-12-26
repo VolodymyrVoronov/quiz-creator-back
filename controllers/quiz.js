@@ -35,3 +35,23 @@ export const fetchQuizzes = async (req, res) => {
       .json({ message: error.message });
   }
 };
+
+export const deleteQuiz = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(NETWORK_STATUS.NOT_FOUND).send("No quiz with that id");
+    }
+
+    await Quiz.findByIdAndRemove(id);
+
+    res
+      .status(NETWORK_STATUS.OK)
+      .json({ message: "Quiz deleted successfully" });
+  } catch (error) {
+    console.log(error);
+
+    res.status(NETWORK_STATUS.NOT_FOUND).json({ message: error.message });
+  }
+};
