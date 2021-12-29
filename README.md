@@ -2,6 +2,14 @@
 
 **Tools**: NodeJS, Express, Mongoose, Nodemon, Jsonwebtoken, Bcryptjs, Email-validator.
 
+### Features:
+
+- Sign up;
+- Sign in;
+- Save quiz;
+- Deleted own quiz;
+- Fetch all quizzes;
+
 To install und run the project:
 
 ### `1. npm install`
