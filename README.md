@@ -7,7 +7,7 @@
 - Sign up;
 - Sign in;
 - Save quiz;
-- Deleted own quiz;
+- Delete own quiz;
 - Fetch all quizzes;
 
 To install und run the project:
